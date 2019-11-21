@@ -7,7 +7,8 @@ from mesa import Model
 from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 
-from vampiro_chromatium.agents import FoodPatch #, Chromatium, Vampiro
+from vampiro_chromatium.food import FoodPatch
+from vampiro_chromatium.agents import Chromatium#, Vampiro
 from vampiro_chromatium.schedule import RandomActivationByBreed
 
 
@@ -16,10 +17,10 @@ class VampiroChromatium(Model):
     Vampiro-Chromatium Predation Model
     '''
 
-    height = 20
-    width = 20
+    height = 10
+    width = 10
 
-    initial_chromatium = 100
+    initial_chromatium = 1
     initial_vampiro = 50
 
     chromatium_reproduce = 0.04
@@ -28,18 +29,19 @@ class VampiroChromatium(Model):
     vampirto_gain_from_food = 20
 
     food = False
+    initial_food = 0.1
     food_regrowth_time = 30
     chromatium_gain_from_food = 4
 
-    verbose = False  # Print-monitoring
+    verbose = True  # Print-monitoring
 
     description = 'A model for simulating vampirococcus and chromatium (predator-prey) ecosystem modelling.'
 
     def __init__(self, height=20, width=20,
-                 initial_chromatium=100, initial_vampiro=50,
+                 initial_chromatium=1, initial_vampiro=50,
                  chromatium_reproduce=0.04, vampiro_reproduce=0.05,
                  vampiro_gain_from_food=20,
-                 food=False, food_regrowth_time=30, chromatium_gain_from_food=4):
+                 food=False, initial_food=0.1, food_regrowth_time=30, chromatium_gain_from_food=4):
         '''
         Create a new Vampiro-Chromatium model with the given parameters.
 
@@ -50,6 +52,7 @@ class VampiroChromatium(Model):
             vampiro_reproduce: Probability of each vampiro reproducing each step
             vampiro_gain_from_food: Energy a vampiro gains from eating a chromatium\
             food: Whether to have the chromatium eat food for energy
+            initial_food: initial food as proportion of the total grid 
             food_regrowth_time: How long it takes for a food patch to regrow
                                  once it is eaten
             chromatium_gain_from_food: Energy chromatium gain from food, if enabled.
@@ -70,12 +73,27 @@ class VampiroChromatium(Model):
         self.schedule = RandomActivationByBreed(self)
         self.grid = MultiGrid(self.height, self.width, torus=True)
 
+        self.datacollector = DataCollector(
+            {"Chromatium": lambda m: m.schedule.get_breed_count(Chromatium)})
 
-        # Create food patches
+        # Create Chromatium:
+        for i in range(self.initial_chromatium):
+            x = self.random.randrange(self.width)
+            y = self.random.randrange(self.height)
+            chromatium = Chromatium(self.next_id(), (x, y), self, True)
+            self.grid.place_agent(chromatium, (x, y))
+            self.schedule.add(chromatium)
+
+
+        # Create food patches:
+        # Implemented in this way every cells has only one path of food
         if self.food:
             for agent, x, y in self.grid.coord_iter():
 
-                eatable = self.random.choice([True, False])
+                if self.random.uniform(0,1) < self.initial_food:
+                    eatable = True
+                else:
+                    eatable = False
 
                 if eatable:
                     countdown = self.food_regrowth_time
@@ -88,8 +106,12 @@ class VampiroChromatium(Model):
                 self.schedule.add(patch)
 
         self.running = True
-        #self.datacollector.collect(self)
+        self.datacollector.collect(self)
 
         
     def step(self):
         self.schedule.step()
+        self.datacollector.collect(self)
+        if self.verbose:
+            print([self.schedule.time,
+                   self.schedule.get_breed_count(Chromatium)])

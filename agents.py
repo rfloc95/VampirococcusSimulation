@@ -1,4 +1,4 @@
-from vampiro_chromatium.gradient_walk import GradientWalker
+from vampiro_chromatium import FoodPatch, GradientWalker
 
 
 
@@ -15,4 +15,4 @@ class Chromatium(GradientWalker):
         '''
         Model step to implement!
         '''
-        self.gradient_move()
+        self.gradient_walk()

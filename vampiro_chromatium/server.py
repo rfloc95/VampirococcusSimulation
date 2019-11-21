@@ -2,7 +2,8 @@ from mesa.visualization.ModularVisualization import ModularServer
 from mesa.visualization.modules import CanvasGrid, ChartModule
 from mesa.visualization.UserParam import UserSettableParameter
 
-from vampiro_chromatium.agents import FoodPatch
+from vampiro_chromatium.food import FoodPatch
+from vampiro_chromatium.agents import Chromatium#, Vampiro
 from vampiro_chromatium.model import VampiroChromatium
 
 
@@ -23,14 +24,14 @@ def vampiro_chromatium_portrayal(agent):
         portrayal["w"] = 1
         portrayal["h"] = 1
 
-    return portrayal
-'''
-    if type(agent) is Sheep:
-        portrayal["Shape"] = "wolf_sheep/resources/sheep.png"
+    elif type(agent) is Chromatium:
+        portrayal["Shape"] = "vampiro_chromatium/resources/chromatium.png"
         # https://icons8.com/web-app/433/sheep
         portrayal["scale"] = 0.9
         portrayal["Layer"] = 1
 
+    return portrayal
+'''
     elif type(agent) is Wolf:
         portrayal["Shape"] = "wolf_sheep/resources/wolf.png"
         # https://icons8.com/web-app/36821/German-Shepherd
@@ -46,8 +47,9 @@ canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 20, 20, 500, 500)
 #chart_element = ChartModule([{"Label": "Wolves", "Color": "#AA0000"},
 #                             {"Label": "Sheep", "Color": "#666666"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
-                "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 20, 1, 50)#,
-                #"initial_sheep": UserSettableParameter('slider', 'Initial Sheep Population', 100, 10, 300),
+                "initial_food": UserSettableParameter('slider', 'Initial Food Proportion', 0.2, 1, 0),
+                "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 20, 1, 50),
+                "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 20, 1, 100)#,
                 #"sheep_reproduce": UserSettableParameter('slider', 'Sheep Reproduction Rate', 0.04, 0.01, 1.0,
                 #                                         0.01),
                 #"initial_wolves": UserSettableParameter('slider', 'Initial Wolf Population', 50, 10, 300),
