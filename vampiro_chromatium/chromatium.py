@@ -13,12 +13,14 @@ class Chromatium(Agent):
     y = None
     moore = True
     energy = None
+    lifespan = 50 # steps
 
-    def __init__(self, unique_id, pos, model, moore, energy=None):
+    def __init__(self, unique_id, pos, model, moore, energy=None, lifespan=50):
         super().__init__(unique_id, model)
         self.pos = pos
         self.moore = moore
         self.energy = energy
+        self.lifespan = lifespan
     
     def gradient_move(self):
         '''
@@ -40,3 +42,24 @@ class Chromatium(Agent):
         Model step to implement!
         '''
         self.gradient_move()
+        living = True
+
+        # reduce energy each step
+        self.energy -= 1
+        # reduce lifespan each step
+        self.lifespan -= 1
+
+        # Death
+        if self.energy < 0 or self.lifespan <= 0:
+            self.model.grid._remove_agent(self.pos, self)
+            self.model.schedule.remove(self)
+            living = False
+            
+        # if there is food available eat it
+        this_cell = self.model.grid.get_cell_list_contents([self.pos])
+        food_patches = [obj for obj in this_cell if isinstance(obj, FoodPatch)][0]
+        if food_patches.eatable:
+            self.energy += self.model.chromatium_gain_from_food
+            food_patches.eatable = False
+        
+        

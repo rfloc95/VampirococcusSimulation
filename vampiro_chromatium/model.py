@@ -42,7 +42,7 @@ class VampiroChromatium(Model):
                  initial_chromatium=10, initial_vampiro=50,
                  chromatium_reproduce=0.04, vampiro_reproduce=0.05,
                  vampiro_gain_from_food=20,
-                 food=False, initial_food=0.1, food_regrowth_time=30, chromatium_gain_from_food=4):
+                 food=False, initial_food=0.1, food_regrowth_time=5000, chromatium_gain_from_food=4):
         '''
         Create a new Vampiro-Chromatium model with the given parameters.
 
@@ -81,7 +81,8 @@ class VampiroChromatium(Model):
         for i in range(self.initial_chromatium):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
-            chromatium = Chromatium(self.next_id(), (x, y), self, True)
+            energy = self.random.randrange(2 * self.chromatium_gain_from_food)
+            chromatium = Chromatium(self.next_id(), (x, y), self, True, energy)
             self.grid.place_agent(chromatium, (x, y))
             self.schedule.add(chromatium)
         

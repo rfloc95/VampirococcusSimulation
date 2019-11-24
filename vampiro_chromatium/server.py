@@ -4,7 +4,7 @@ from mesa.visualization.UserParam import UserSettableParameter
 
 from vampiro_chromatium.food import FoodPatch
 from vampiro_chromatium.chromatium import Chromatium
-from vampiro_chromatium.vampiro import Vampiro
+#from vampiro_chromatium.vampiro import Vampiro
 from vampiro_chromatium.model import VampiroChromatium
 
 
@@ -49,7 +49,7 @@ canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 20, 20, 500, 500)
 #                             {"Label": "Sheep", "Color": "#666666"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
                 "initial_food": UserSettableParameter('slider', 'Initial Food Proportion', 0.2, 1, 0),
-                "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 20, 1, 50),
+                "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 100, 1, 500),
                 "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 20, 1, 100)#,
                 #"sheep_reproduce": UserSettableParameter('slider', 'Sheep Reproduction Rate', 0.04, 0.01, 1.0,
                 #                                         0.01),
