@@ -1,3 +1,22 @@
 # Vampirococcus Agent-Based Model Simulation
 
-Agent-based model simulation of bacteria populations of Vampirococcus and Chromatium coexisting.
+## Summary
+
+A simple ecological model, consisting of three agent types: bacteria Vampirococcus, bacteria Chromatium, and food. The Vampirococcus and the Chromatium wander around the grid by gradient. Vampirococcus and Chromatium both expend energy moving around, and replenish it by eating. Chromatium eat food, and Vampirococcus eat Chromatium if they end up on the same grid cell.
+
+
+The model is tests and demonstrates several Mesa concepts and features:
+ - MultiGrid
+ - Multiple agent types (vampiro, chromatium, food)
+ - Overlay arbitrary text (vampiro's energy) on agent's shapes while drawing on CanvasGrid
+ - Agents inheriting a behavior (gradient movement) from an abstract parent
+ - Writing a model composed of multiple files.
+ - Dynamically adding and removing agents from the schedule
+
+## Installation
+
+To install the dependencies use pip and the requirements.txt in this directory. e.g.
+
+```
+    $ pip install -r requirements.txt
+```

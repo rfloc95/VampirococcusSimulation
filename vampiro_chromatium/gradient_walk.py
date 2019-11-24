@@ -7,10 +7,12 @@ from vampiro_chromatium.food import FoodPatch
 
 class GradientWalker(Agent):
         '''
-        Class implementing random walker methods in a generalized manner.
+        Class implementing gradient walker methods in a generalized manner.
 
         Not indended to be used on its own, but to inherit its methods to multiple
         other agents.
+
+        
 
         '''
 
@@ -26,14 +28,13 @@ class GradientWalker(Agent):
             y: The agent's current y coordinate
             moore: If True, may move in all 8 directions.
                     Otherwise, only up, down, left, right.
+            foodclass: which class to use as food for gradient between FoodPatch and other
             '''
             super().__init__(unique_id, model)
             self.pos = pos
             self.moore = moore
 
         def gradient_move(self):
-            possible_moves = []
-
             neigh_obj = self.model.grid.get_neighbors(self.pos, self.moore, include_center=True, radius=1)
             food_patches = [obj for obj in neigh_obj if isinstance(obj, FoodPatch) and obj.eatable]
             if len(food_patches) > 0:
