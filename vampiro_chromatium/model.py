@@ -8,7 +8,8 @@ from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
 
 from vampiro_chromatium.food import FoodPatch
-from vampiro_chromatium.chromatium import Chromatium#, Vampiro
+from vampiro_chromatium.chromatium import Chromatium
+from vampiro_chromatium.vampiro import Vampiro
 from vampiro_chromatium.schedule import RandomActivationByBreed
 
 
@@ -17,10 +18,10 @@ class VampiroChromatium(Model):
     Vampiro-Chromatium Predation Model
     '''
 
-    height = 10
-    width = 10
+    height = 20
+    width = 20
 
-    initial_chromatium = 1
+    initial_chromatium = 10
     initial_vampiro = 50
 
     chromatium_reproduce = 0.04
@@ -38,7 +39,7 @@ class VampiroChromatium(Model):
     description = 'A model for simulating vampirococcus and chromatium (predator-prey) ecosystem modelling.'
 
     def __init__(self, height=20, width=20,
-                 initial_chromatium=1, initial_vampiro=50,
+                 initial_chromatium=10, initial_vampiro=50,
                  chromatium_reproduce=0.04, vampiro_reproduce=0.05,
                  vampiro_gain_from_food=20,
                  food=False, initial_food=0.1, food_regrowth_time=30, chromatium_gain_from_food=4):
@@ -83,6 +84,16 @@ class VampiroChromatium(Model):
             chromatium = Chromatium(self.next_id(), (x, y), self, True)
             self.grid.place_agent(chromatium, (x, y))
             self.schedule.add(chromatium)
+        
+        # Create Vampiro:
+        '''
+        for i in range(self.initial_vampiro):
+            x = self.random.randrange(self.width)
+            y = self.random.randrange(self.height)
+            vampiro = Vampiro(self.next_id(), (x, y), self, True)
+            self.grid.place_agent(vampiro, (x, y))
+            self.schedule.add(vampiro)
+        '''
 
 
         # Create food patches:
