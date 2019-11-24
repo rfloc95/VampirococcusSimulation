@@ -1,3 +1,4 @@
+import math
 from mesa import Agent
 from vampiro_chromatium.food import FoodPatch
 
@@ -20,7 +21,7 @@ class Chromatium(Agent):
         self.pos = pos
         self.moore = moore
         self.energy = energy
-        self.lifespan = lifespan
+        self.lifespan = lifespan + self.random.randrange(math.floor(-lifespan*0.1), math.ceil(lifespan*0.1))
     
     def gradient_move(self):
         '''
@@ -54,7 +55,7 @@ class Chromatium(Agent):
             self.model.grid._remove_agent(self.pos, self)
             self.model.schedule.remove(self)
             living = False
-            
+
         # if there is food available eat it
         this_cell = self.model.grid.get_cell_list_contents([self.pos])
         food_patches = [obj for obj in this_cell if isinstance(obj, FoodPatch)][0]
