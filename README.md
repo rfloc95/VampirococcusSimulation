@@ -9,7 +9,6 @@ The model is tests and demonstrates several Mesa concepts and features:
  - MultiGrid
  - Multiple agent types (vampiro, chromatium, food)
  - Overlay arbitrary text (vampiro's energy) on agent's shapes while drawing on CanvasGrid
- - Agents inheriting a behavior (gradient movement) from an abstract parent
  - Writing a model composed of multiple files.
  - Dynamically adding and removing agents from the schedule
 
@@ -19,4 +18,13 @@ To install the dependencies use pip and the requirements.txt in this directory. 
 
 ```
     $ pip install -r requirements.txt
+```
+NOTE: python3 required!!!
+
+## Running Simulation
+
+To run the interactive simulation from the main folder type:
+
+```
+   $ python run.py
 ```
