@@ -48,10 +48,10 @@ class Chromatium(Agent):
         # reduce energy each step
         self.energy -= 1
         # reduce lifespan each step
-        self.lifespan -= 1
+        #self.lifespan -= 1
 
         # Death
-        if self.energy < 0 or self.lifespan <= 0:
+        if self.energy < 0:
             self.model.grid._remove_agent(self.pos, self)
             self.model.schedule.remove(self)
             living = False
@@ -63,4 +63,12 @@ class Chromatium(Agent):
             self.energy += self.model.chromatium_gain_from_food
             food_patches.eatable = False
         
+        # Reproduction
+        if living and self.random.random() < self.model.chromatium_reproduce:
+            # Create a new chromatium:
+            self.energy /= 2
+            chromatium = Chromatium(self.model.next_id(), self.pos, self.model,
+                         self.moore, self.energy)
+            self.model.grid.place_agent(chromatium, self.pos)
+            self.model.schedule.add(chromatium)
         
