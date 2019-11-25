@@ -23,7 +23,7 @@ class Vampiro(Agent):
         '''
         Gradient move depending on Chromatium
         '''
-        neigh_obj = self.model.grid.get_neighboor(self.pos, self.moore, include_center=True, radius=1)
+        neigh_obj = self.model.grid.get_neighbors(self.pos, self.moore, include_center=True, radius=1)
         food_patches = [obj for obj in neigh_obj if isinstance(obj, Chromatium)]
         if len(food_patches) > 0:
             next_move = self.random.choice(food_patches)

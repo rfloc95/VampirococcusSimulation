@@ -22,7 +22,7 @@ class VampiroChromatium(Model):
     width = 20
 
     initial_chromatium = 10
-    initial_vampiro = 50
+    initial_vampiro = 20
 
     chromatium_reproduce = 0.04
     vampiro_reproduce = 0.05
@@ -39,7 +39,7 @@ class VampiroChromatium(Model):
     description = 'A model for simulating vampirococcus and chromatium (predator-prey) ecosystem modelling.'
 
     def __init__(self, height=20, width=20,
-                 initial_chromatium=10, initial_vampiro=50,
+                 initial_chromatium=10, initial_vampiro=20,
                  chromatium_reproduce=0.04, vampiro_reproduce=0.05,
                  vampiro_gain_from_food=20,
                  food=False, initial_food=0.1, food_regrowth_time=5000, chromatium_gain_from_food=4):
@@ -64,6 +64,7 @@ class VampiroChromatium(Model):
         self.width = width
         self.initial_chromatium = initial_chromatium
         self.initial_vampiro = initial_vampiro
+        self.initial_food = initial_food
         self.chromatium_reproduce = chromatium_reproduce
         self.vampiro_reproduce = vampiro_reproduce
         self.vampiro_gain_from_food = vampiro_gain_from_food
@@ -87,14 +88,15 @@ class VampiroChromatium(Model):
             self.schedule.add(chromatium)
         
         # Create Vampiro:
-        '''
+        
         for i in range(self.initial_vampiro):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
-            vampiro = Vampiro(self.next_id(), (x, y), self, True)
+            energy = self.random.randrange(2 * self.vampiro_gain_from_food)
+            vampiro = Vampiro(self.next_id(), (x, y), self, True, energy)
             self.grid.place_agent(vampiro, (x, y))
             self.schedule.add(vampiro)
-        '''
+        
 
 
         # Create food patches:
