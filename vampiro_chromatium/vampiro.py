@@ -39,3 +39,24 @@ class Vampiro(Agent):
         Step mpdel todo!!!
         '''
         self.gradient_move()
+
+	#If there is a Chromatium, eat one
+	this_cell = self.model.grid.get_cell_list_contents([self.pos]) 
+        Chrome = [obj for obj in this_cell if isinstance(obj, Chromatium)]
+        if len(Chrome) > 0: 
+            chrome_to_eat = self.random.choice(Chrome)
+            self.energy += self.model.vampiro_gain_from_food
+            #kill the Chromatium
+            self.model.grid._remove_agent(self.pos, chrome_to_eat)
+            self.model.schedule.remove(chrome_to_eat)
+        
+        if self.energy < 0:
+            self.model.grid._remove_agent(self.pos, self)
+            self.model.schedule.remove(self)
+        else:
+            if self.random.random() < self.model.vampiro_reproduce
+                self.energy /= 2
+                vampirino = Vampiro(self.model.next_id(), self.pos, self.model, self.moore, self.energy)
+                self.model.grid.place_agent(vampirino, vampirino.pos)
+                self.model.schedule.add(vampirino)
+                
