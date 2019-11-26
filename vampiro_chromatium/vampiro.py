@@ -1,3 +1,4 @@
+
 from mesa import Agent
 from vampiro_chromatium.chromatium import Chromatium
 

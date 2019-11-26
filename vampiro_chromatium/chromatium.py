@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> vampiro
+
 from mesa import Agent
 from vampiro_chromatium.food import FoodPatch
 

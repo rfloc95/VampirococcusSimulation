@@ -3,6 +3,7 @@ from mesa.visualization.modules import CanvasGrid, ChartModule
 from mesa.visualization.UserParam import UserSettableParameter
 
 from vampiro_chromatium.food import FoodPatch
+
 from vampiro_chromatium.chromatium import Chromatium
 from vampiro_chromatium.vampiro import Vampiro
 from vampiro_chromatium.model import VampiroChromatium
@@ -45,25 +46,6 @@ def vampiro_chromatium_portrayal(agent):
 
 
 canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 20, 20, 500, 500)
-<<<<<<< HEAD
-#chart_element = ChartModule([{"Label": "Vampiro", "Color": "#AA0000"}])#,
-#                             {"Label": "Chromatium", "Color": "#666666"}])
-model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
-                "initial_food": UserSettableParameter('slider', 'Initial Food Proportion', 0.2, 0, 1.0, 0.01),
-                "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 50, 1, 200, 1),
-                "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 20, 1, 100, 1),
-                "chromatium_reproduce": UserSettableParameter('slider', 'Chromatium Reproduction Rate', 0.04, 0.01, 1.0,
-                                                         0.01)#,
-                #"initial_wolves": UserSettableParameter('slider', 'Initial Wolf Population', 50, 10, 300),
-                #"wolf_reproduce": UserSettableParameter('slider', 'Wolf Reproduction Rate', 0.05, 0.01, 1.0,
-                #                                        0.01,
-                #                                        description="The rate at which wolf agents reproduce."),
-                #"wolf_gain_from_food": UserSettableParameter('slider', 'Wolf Gain From Food Rate', 20, 1, 50),
-                #"sheep_gain_from_food": UserSettableParameter('slider', 'Sheep Gain From Food', 4, 1, 10)
-                }
-
-#server = ModularServer(VampiroChromatium, [canvas_element, chart_element], "Vampiro Chromatium Predation", model_params)
-=======
 chart_element = ChartModule([{"Label": "Vampiro", "Color": "#AA0000"},
                              {"Label": "Chromatium", "Color": "#666666"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
@@ -79,6 +61,4 @@ model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
                 }
 
 server = ModularServer(VampiroChromatium, [canvas_element, chart_element], "Vampiro Chromatium Predation", model_params)
->>>>>>> vampiro
-server = ModularServer(VampiroChromatium, [canvas_element], "Vampirococcus Chromatium Ecosystem", model_params)
 server.port = 8521
