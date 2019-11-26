@@ -1,4 +1,3 @@
-import math
 from mesa import Agent
 from vampiro_chromatium.food import FoodPatch
 
@@ -14,23 +13,24 @@ class Chromatium(Agent):
     y = None
     moore = True
     energy = None
-    lifespan = 50 # steps
 
-    def __init__(self, unique_id, pos, model, moore, energy=None, lifespan=50):
+    def __init__(self, unique_id, pos, model, moore, energy=None):
         super().__init__(unique_id, model)
         self.pos = pos
         self.moore = moore
         self.energy = energy
-        self.lifespan = lifespan + self.random.randrange(math.floor(-lifespan*0.1), math.ceil(lifespan*0.1))
     
     def gradient_move(self):
         '''
-        Gradient move depending on FoodPatch!
+        Gradient move depending on FoodPatch and Vampiro == Chemotaxys fellas!
         '''
         neigh_obj = self.model.grid.get_neighbors(self.pos, self.moore, include_center=True, radius=1)
         food_patches = [obj for obj in neigh_obj if isinstance(obj, FoodPatch) and obj.eatable]
         if len(food_patches) > 0:
-            next_move = self.random.choice(food_patches)
+            # look those with higher store
+            food_patches.sort()
+            highest_patches = [obj for obj in food_patches if obj.store_level == food_patches[0].store_level]
+            next_move = self.random.choice(highest_patches)
             self.model.grid.move_agent(self, next_move.pos)
 
         # Otherwise move random
@@ -47,8 +47,6 @@ class Chromatium(Agent):
 
         # reduce energy each step
         self.energy -= 1
-        # reduce lifespan each step
-        #self.lifespan -= 1
 
         # Death
         if self.energy < 0:
@@ -61,8 +59,13 @@ class Chromatium(Agent):
         food_patches = [obj for obj in this_cell if isinstance(obj, FoodPatch)][0]
         if food_patches.eatable:
             self.energy += self.model.chromatium_gain_from_food
-            food_patches.eatable = False
-        
+            # Reduce quantity of food present in foodpatch depending on store
+            if food_patches.store_level < 2:
+                food_patches.store_level = 0
+                food_patches.eatable = False
+            else:
+                food_patches.store_level -= 1
+
         # Reproduction
         if living and self.random.random() < self.model.chromatium_reproduce:
             # Create a new chromatium:
