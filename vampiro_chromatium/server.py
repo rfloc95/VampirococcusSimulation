@@ -38,8 +38,8 @@ def vampiro_chromatium_portrayal(agent):
         # https://icons8.com/web-app/36821/German-Shepherd
         portrayal["scale"] = 0.9
         portrayal["Layer"] = 2
-        portrayal["text"] = round(agent.energy, 1)
-        portrayal["text_color"] = "White"
+        #portrayal["text"] = round(agent.energy, 1)
+        #portrayal["text_color"] = "Green"
 
     return portrayal
 
