@@ -2,7 +2,6 @@ from mesa import Agent
 from vampiro_chromatium.food import FoodPatch
 
 
-
 class Chromatium(Agent):
     '''
     A chromatium that walks around, food gradient dependend
@@ -25,6 +24,16 @@ class Chromatium(Agent):
         Gradient move depending on FoodPatch and Vampiro == Chemotaxys fellas!
         '''
         neigh_obj = self.model.grid.get_neighbors(self.pos, self.moore, include_center=True, radius=1)
+        
+        # I can not load vampiro here because vampiro loads Chromatium
+        '''
+        # TO DO: If there is a Vampiro, Go away from him -> at least one cell away, then look for food
+        vampiro_pos = [obj.pos for obj in neigh_obj if isinstance(obj, Vampiro)]
+        if len(vampiro_pos) > 0:
+            cells_to_avoid = [self.model.grid.get_neighborhood(coor, True, include_center=True, radius=1) for coor in vampiro_pos]
+            print(cells_to_avoid)
+        '''
+
         food_patches = [obj for obj in neigh_obj if isinstance(obj, FoodPatch) and obj.eatable]
         if len(food_patches) > 0:
             # look those with higher store
