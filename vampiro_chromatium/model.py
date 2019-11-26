@@ -2,7 +2,6 @@
 Vampirococcus and Chromatium Model simulation
 '''
 
-
 from mesa import Model
 from mesa.space import MultiGrid
 from mesa.datacollection import DataCollector
@@ -30,7 +29,7 @@ class VampiroChromatium(Model):
 
     food = False
     initial_food = 0.1
-    food_regrowth_time = 30
+    food_regrowth_time = 30 # Max growth time for food 
     chromatium_gain_from_food = 4
 
     verbose = True  # Print-monitoring
@@ -67,6 +66,7 @@ class VampiroChromatium(Model):
         self.vampiro_reproduce = vampiro_reproduce
         self.vampiro_gain_from_food = vampiro_gain_from_food
         self.food = food
+        self.initial_food = initial_food
         self.food_regrowth_time = food_regrowth_time
         self.chromatium_gain_from_food = chromatium_gain_from_food
 
@@ -103,16 +103,13 @@ class VampiroChromatium(Model):
 
                 if self.random.uniform(0,1) < self.initial_food:
                     eatable = True
+                    store_level = 1
                 else:
                     eatable = False
-
-                if eatable:
-                    countdown = self.food_regrowth_time
-                else:
-                    countdown = self.random.randrange(self.food_regrowth_time)
-
+                    store_level = 0
+                countdown = self.random.randrange(self.food_regrowth_time)
                 patch = FoodPatch(self.next_id(), (x, y), self,
-                                   eatable, countdown)
+                                   eatable, countdown, store_level)
                 self.grid.place_agent(patch, (x, y))
                 self.schedule.add(patch)
 

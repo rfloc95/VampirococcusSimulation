@@ -17,6 +17,8 @@ def vampiro_chromatium_portrayal(agent):
     if type(agent) is FoodPatch:
         if agent.eatable:
             portrayal["Color"] = ["#00FF00", "#00CC00", "#009900"]
+            portrayal["text"] = agent.store_level
+            portrayal["text_color"] = "Red"
         else:
             portrayal["Color"] = ["#84e184", "#adebad", "#d6f5d6"]
         portrayal["Shape"] = "rect"
@@ -45,14 +47,14 @@ def vampiro_chromatium_portrayal(agent):
 '''
 
 canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 20, 20, 500, 500)
-#chart_element = ChartModule([{"Label": "Wolves", "Color": "#AA0000"},
-#                             {"Label": "Sheep", "Color": "#666666"}])
+#chart_element = ChartModule([{"Label": "Vampiro", "Color": "#AA0000"}])#,
+#                             {"Label": "Chromatium", "Color": "#666666"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
-                "initial_food": UserSettableParameter('slider', 'Initial Food Proportion', 0.2, 1, 0),
-                "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 100, 1, 500),
-                "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 20, 1, 100)#,
-                #"sheep_reproduce": UserSettableParameter('slider', 'Sheep Reproduction Rate', 0.04, 0.01, 1.0,
-                #                                         0.01),
+                "initial_food": UserSettableParameter('slider', 'Initial Food Proportion', 0.2, 0, 1.0, 0.01),
+                "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 50, 1, 200, 1),
+                "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 20, 1, 100, 1),
+                "chromatium_reproduce": UserSettableParameter('slider', 'Chromatium Reproduction Rate', 0.04, 0.01, 1.0,
+                                                         0.01)#,
                 #"initial_wolves": UserSettableParameter('slider', 'Initial Wolf Population', 50, 10, 300),
                 #"wolf_reproduce": UserSettableParameter('slider', 'Wolf Reproduction Rate', 0.05, 0.01, 1.0,
                 #                                        0.01,
@@ -61,6 +63,6 @@ model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
                 #"sheep_gain_from_food": UserSettableParameter('slider', 'Sheep Gain From Food', 4, 1, 10)
                 }
 
-#server = ModularServer(WolfSheep, [canvas_element, chart_element], "Wolf Sheep Predation", model_params)
+#server = ModularServer(VampiroChromatium, [canvas_element, chart_element], "Vampiro Chromatium Predation", model_params)
 server = ModularServer(VampiroChromatium, [canvas_element], "Vampirococcus Chromatium Ecosystem", model_params)
 server.port = 8521
