@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> vampiro
 from mesa import Agent
 from vampiro_chromatium.food import FoodPatch
 
@@ -23,7 +26,7 @@ class Chromatium(Agent):
     
     def gradient_move(self):
         '''
-        Gradient move depending on FoodPatch!
+        Gradient move depending on FoodPatch and Vampiro == Chemotaxys fellas!
         '''
         neigh_obj = self.model.grid.get_neighbors(self.pos, self.moore, include_center=True, radius=1)
         food_patches = [obj for obj in neigh_obj if isinstance(obj, FoodPatch) and obj.eatable]
