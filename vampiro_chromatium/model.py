@@ -106,16 +106,13 @@ class VampiroChromatium(Model):
 
                 if self.random.uniform(0,1) < self.initial_food:
                     eatable = True
+                    store_level = 1
                 else:
                     eatable = False
-
-                if eatable:
-                    countdown = self.food_regrowth_time
-                else:
-                    countdown = self.random.randrange(self.food_regrowth_time)
-
+                    store_level = 0
+                countdown = self.random.randrange(self.food_regrowth_time)
                 patch = FoodPatch(self.next_id(), (x, y), self,
-                                   eatable, countdown)
+                                   eatable, countdown, store_level)
                 self.grid.place_agent(patch, (x, y))
                 self.schedule.add(patch)
 
