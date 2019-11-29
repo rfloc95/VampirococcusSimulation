@@ -1,4 +1,5 @@
 from mesa import Agent
+import math
 from vampiro_chromatium.food import FoodPatch
 
 
@@ -52,8 +53,6 @@ class Chromatium(Agent):
         Model step to implement!
         '''
         self.gradient_move()
-        living = True
-
         # reduce energy each step
         self.energy -= 1
 
@@ -61,7 +60,6 @@ class Chromatium(Agent):
         if self.energy < 0:
             self.model.grid._remove_agent(self.pos, self)
             self.model.schedule.remove(self)
-            living = False
 
         # if there is food available eat it
         this_cell = self.model.grid.get_cell_list_contents([self.pos])
@@ -76,9 +74,9 @@ class Chromatium(Agent):
                 food_patches.store_level -= 1
 
         # Reproduction
-        if living and self.random.random() < self.model.chromatium_reproduce:
+        if  self.random.random() < self.model.chromatium_reproduce:
             # Create a new chromatium:
-            self.energy /= 2
+            self.energy = math.floor(self.energy /2)
             chromatium = Chromatium(self.model.next_id(), self.pos, self.model,
                          self.moore, self.energy)
             self.model.grid.place_agent(chromatium, self.pos)
