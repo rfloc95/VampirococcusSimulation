@@ -59,8 +59,9 @@ class Vampiro(Agent):
                 # if it does not, suck it and kill it
                 else:
                     self.energy += self.model.vampiro_gain_from_food-self.prey.energy
-                    self.model.grid._remove_agent(self.prey.pos, self.prey)
-                    self.model.schedule.remove(self.prey)
+                    self.prey.energy -= self.model.vampiro_gain_from_food
+                    #self.model.grid._remove_agent(self.prey.pos, self.prey)
+                    #self.model.schedule.remove(self.prey)
                     self.prey = None
             else:
                 already_eat = False
@@ -82,8 +83,9 @@ class Vampiro(Agent):
                 # if it does not, suck it and kill it
                 else:
                     self.energy += self.model.vampiro_gain_from_food-self.prey.energy
-                    self.model.grid._remove_agent(self.prey.pos, self.prey)
-                    self.model.schedule.remove(self.prey)
+                    self.prey.energy -= self.model.vampiro_gain_from_food
+                    #self.model.grid._remove_agent(self.prey.pos, self.prey)
+                    #self.model.schedule.remove(self.prey)
                     self.prey = None 
 
         
