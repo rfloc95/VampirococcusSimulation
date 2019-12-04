@@ -22,13 +22,27 @@ class Vampiro(Agent):
         self.energy = energy
         self.prey = prey
     
-    def random_move(self):
+    def gradient_move(self):
         '''
-        Random Move
+        Gradient move depending on Chromatium
         '''
         neigh_obj = self.model.grid.get_neighbors(self.pos, self.moore, include_center=True, radius=1)
+        food_patches = [obj for obj in neigh_obj if isinstance(obj, Chromatium)]
+        if len(food_patches) > 0:
+            next_move = self.random.choice(food_patches)
+            self.model.grid.move_agent(self, next_move.pos)
+
+        # Otherwise move random
+        else:
+            next_move = self.random.choice(neigh_obj)
+            self.model.grid.move_agent(self, next_move.pos)
+    '''def random_move(self):
+        
+        #Random Move
+        
+        neigh_obj = self.model.grid.get_neighbors(self.pos, self.moore, include_center=True, radius=1)
         next_move = self.random.choice(neigh_obj)
-        self.model.grid.move_agent(self, next_move.pos)
+        self.model.grid.move_agent(self, next_move.pos)'''
     
     
     
@@ -70,7 +84,7 @@ class Vampiro(Agent):
             '''
             Not attached to prey, move random and check for some prey
             '''
-            self.random_move()
+            self.gradient_move()
             # Check for chromatium
             this_cell = self.model.grid.get_cell_list_contents([self.pos])
             Chrome = [obj for obj in this_cell if isinstance(obj, Chromatium)]
