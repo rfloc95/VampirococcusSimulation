@@ -51,7 +51,6 @@ class Vampiro(Agent):
 
         self.energy -= 1
         already_eat = False
-        print("Vampiro initial pos:", self.pos)
         ### Eating
         if self.prey != None:
             already_eat = True
@@ -68,8 +67,6 @@ class Vampiro(Agent):
                 if self.prey.energy >= self.model.vampiro_gain_from_food:
                     self.energy += self.model.vampiro_gain_from_food
                     self.prey.energy -= self.model.vampiro_gain_from_food
-                    print("Chromatium prey pos:", self.prey.pos)
-                    print("Vampiro pos:", self.pos)
                 # if it does not, suck it and kill it
                 else:
                     self.energy += self.model.vampiro_gain_from_food-self.prey.energy

@@ -46,21 +46,21 @@ def vampiro_chromatium_portrayal(agent):
     return portrayal
 
 
-canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 20, 20, 500, 500)
+canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 50, 50, 500, 500)
 chart_element = ChartModule([{"Label": "Vampiro", "Color": "#AA0000"},
                              {"Label": "Chromatium", "Color": "#666666"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
                 "initial_food": UserSettableParameter('slider', 'Initial Food Proportion', 0.2, 0.01, 1.0, 0.01),
                 "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 50, 1, 300,1),
-                "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 20, 1, 100,1),
+                "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 80, 1, 100,1),
                 "chromatium_reproduce": UserSettableParameter('slider', 'Chromatium Reproduction Rate', 0.04, 0.01, 1.0, 0.01),
-                "initial_vampiro": UserSettableParameter('slider', 'Initial Vampiro Population', 5, 1, 100, 1),
+                "initial_vampiro": UserSettableParameter('slider', 'Initial Vampiro Population', 20, 1, 100, 1),
                 "vampiro_reproduce": UserSettableParameter('slider', 'Vampiro Reproduction Rate', 0.05, 0.01, 1.0, 0.01,
                                                        description="The rate at which vampiro agents reproduce."),
-                "vampiro_gain_from_food": UserSettableParameter('slider', 'Vampiro Gain From Food Rate', 20, 1, 30, 1),
-                "chromatium_gain_from_food": UserSettableParameter('slider', 'Chromatium Gain From Food', 4, 1, 30, 1)
+                "vampiro_gain_from_food": UserSettableParameter('slider', 'Vampiro Gain From Food Rate', 2, 1, 30, 1),
+                "chromatium_gain_from_food": UserSettableParameter('slider', 'Chromatium Gain From Food', 5, 1, 30, 1)
                 }
 
 server = ModularServer(VampiroChromatium, [canvas_element, chart_element], "Vampiro Chromatium Predation", model_params)
-server = ModularServer(VampiroChromatium, [canvas_element], "Vampirococcus Chromatium Ecosystem", model_params)
+#server = ModularServer(VampiroChromatium, [canvas_element], "Vampirococcus Chromatium Ecosystem", model_params)
 server.port = 8521

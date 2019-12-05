@@ -29,22 +29,22 @@ class VampiroChromatium(Model):
     chromatium_reproduce = 0.04
     vampiro_reproduce = 0.05
 
-    vampirto_gain_from_food = 20
+    vampiro_gain_from_food = 2
 
     food = False
     initial_food = 0.1
     food_regrowth_time = 30
-    chromatium_gain_from_food = 4
+    chromatium_gain_from_food = 5
 
     verbose = True  # Print-monitoring
 
     description = 'A model for simulating vampirococcus and chromatium (predator-prey) ecosystem modelling.'
 
-    def __init__(self, height=20, width=20,
+    def __init__(self, height=50, width=50,
                  initial_chromatium=10, initial_vampiro=20,
                  chromatium_reproduce=0.04, vampiro_reproduce=0.05,
                  vampiro_gain_from_food=20,
-                 food=False, initial_food=0.1, food_regrowth_time=5000, chromatium_gain_from_food=4):
+                 food=True, initial_food=0.1, food_regrowth_time=5000, chromatium_gain_from_food=4):
         '''
         Create a new Vampiro-Chromatium model with the given parameters.
 
@@ -78,13 +78,14 @@ class VampiroChromatium(Model):
         self.grid = MultiGrid(self.height, self.width, torus=True)
 
         self.datacollector = DataCollector(
-            {"Chromatium": lambda m: m.schedule.get_breed_count(Chromatium)})
+            {"Vampiro": lambda m: m.schedule.get_breed_count(Vampiro),
+             "Chromatium": lambda m: m.schedule.get_breed_count(Chromatium)})
 
         # Create Chromatium:
         for i in range(self.initial_chromatium):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
-            energy = self.random.randrange(2 * self.chromatium_gain_from_food)
+            energy = 2 * self.chromatium_gain_from_food
             chromatium = Chromatium(self.next_id(), (x, y), self, True, energy)
             self.grid.place_agent(chromatium, (x, y))
             self.schedule.add(chromatium)
@@ -94,7 +95,7 @@ class VampiroChromatium(Model):
         for i in range(self.initial_vampiro):
             x = self.random.randrange(self.width)
             y = self.random.randrange(self.height)
-            energy = self.random.randrange(2 * self.vampiro_gain_from_food)
+            energy = 5 * self.vampiro_gain_from_food
             vampiro = Vampiro(self.next_id(), (x, y), self, True, energy)
             self.grid.place_agent(vampiro, (x, y))
             self.schedule.add(vampiro)
@@ -127,4 +128,23 @@ class VampiroChromatium(Model):
         self.datacollector.collect(self)
         if self.verbose:
             print([self.schedule.time,
-                   self.schedule.get_breed_count(Chromatium)])
+                   self.schedule.get_breed_count(Chromatium),
+                   self.schedule.get_breed_count(Vampiro)])
+    
+    def run_model(self, step_count=200):
+
+        if self.verbose:
+            print('Initial number vampirococcus: ',
+                  self.schedule.get_breed_count(Vampiro))
+            print('Initial number chromatium: ',
+                  self.schedule.get_breed_count(Chromatium))
+
+        for i in range(step_count):
+            self.step()
+
+        if self.verbose:
+            print('')
+            print('Final number vampirococcus: ',
+                  self.schedule.get_breed_count(Vampiro))
+            print('Final number chromatium: ',
+                  self.schedule.get_breed_count(Chromatium))
