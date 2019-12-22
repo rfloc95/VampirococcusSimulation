@@ -36,15 +36,13 @@ class VampiroChromatium(Model):
     food_regrowth_time = 30
     chromatium_gain_from_food = 5
 
-    verbose = True  # Print-monitoring
+    verbose = False  # Print-monitoring
 
     description = 'A model for simulating vampirococcus and chromatium (predator-prey) ecosystem modelling.'
 
-    def __init__(self, height=50, width=50,
-                 initial_chromatium=10, initial_vampiro=20,
-                 chromatium_reproduce=0.04, vampiro_reproduce=0.05,
-                 vampiro_gain_from_food=20,
-                 food=True, initial_food=0.1, food_regrowth_time=5000, chromatium_gain_from_food=4):
+    def __init__(self, initial_chromatium, initial_vampiro, chromatium_reproduce, vampiro_reproduce,
+                height=30, width=30, vampiro_gain_from_food=2,
+                food=True, initial_food=0.1, food_regrowth_time=50, chromatium_gain_from_food=5):
         '''
         Create a new Vampiro-Chromatium model with the given parameters.
 
@@ -80,6 +78,9 @@ class VampiroChromatium(Model):
         self.datacollector = DataCollector(
             {"Vampiro": lambda m: m.schedule.get_breed_count(Vampiro),
              "Chromatium": lambda m: m.schedule.get_breed_count(Chromatium)})
+
+        self.random.seed(30)
+
 
         # Create Chromatium:
         for i in range(self.initial_chromatium):
@@ -130,6 +131,9 @@ class VampiroChromatium(Model):
             print([self.schedule.time,
                    self.schedule.get_breed_count(Chromatium),
                    self.schedule.get_breed_count(Vampiro)])
+        return [self.schedule.time,
+                   self.schedule.get_breed_count(Chromatium),
+                   self.schedule.get_breed_count(Vampiro)]
     
     def run_model(self, step_count=200):
 
@@ -146,5 +150,5 @@ class VampiroChromatium(Model):
             print('')
             print('Final number vampirococcus: ',
                   self.schedule.get_breed_count(Vampiro))
-            print('Final number chromatium: ',
+            print('Final numberpass chromatium: ',
                   self.schedule.get_breed_count(Chromatium))

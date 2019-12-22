@@ -46,7 +46,7 @@ def vampiro_chromatium_portrayal(agent):
     return portrayal
 
 
-canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 50, 50, 500, 500)
+canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 30, 30, 900, 900)
 chart_element = ChartModule([{"Label": "Vampiro", "Color": "#AA0000"},
                              {"Label": "Chromatium", "Color": "#666666"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
