@@ -46,16 +46,16 @@ def vampiro_chromatium_portrayal(agent):
     return portrayal
 
 
-canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 30, 30, 900, 900)
+canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 50, 50, 900, 900)
 chart_element = ChartModule([{"Label": "Vampiro", "Color": "#AA0000"},
                              {"Label": "Chromatium", "Color": "#666666"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
                 "initial_food": UserSettableParameter('slider', 'Initial Food Proportion', 0.2, 0.01, 1.0, 0.01),
                 "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 50, 1, 300,1),
                 "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 80, 1, 100,1),
-                "chromatium_reproduce": UserSettableParameter('slider', 'Chromatium Reproduction Rate', 0.04, 0.01, 1.0, 0.01),
+                "chromatium_reproduce": UserSettableParameter('slider', 'Chromatium Reproduction Rate', 0.15, 0.01, 1.0, 0.01),
                 "initial_vampiro": UserSettableParameter('slider', 'Initial Vampiro Population', 20, 1, 100, 1),
-                "vampiro_reproduce": UserSettableParameter('slider', 'Vampiro Reproduction Rate', 0.05, 0.01, 1.0, 0.01,
+                "vampiro_reproduce": UserSettableParameter('slider', 'Vampiro Reproduction Rate', 0.3, 0.01, 1.0, 0.01,
                                                        description="The rate at which vampiro agents reproduce."),
                 "vampiro_gain_from_food": UserSettableParameter('slider', 'Vampiro Gain From Food Rate', 2, 1, 30, 1),
                 "chromatium_gain_from_food": UserSettableParameter('slider', 'Chromatium Gain From Food', 5, 1, 30, 1)
