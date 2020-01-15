@@ -41,7 +41,7 @@ class VampiroChromatium(Model):
     description = 'A model for simulating vampirococcus and chromatium (predator-prey) ecosystem modelling.'
 
     def __init__(self, initial_chromatium, initial_vampiro, chromatium_reproduce=0.3, vampiro_reproduce=0.15,
-                height=50, width=50, vampiro_gain_from_food=2,
+                height=20, width=20, vampiro_gain_from_food=2,
                 food=True, initial_food=0.1, food_regrowth_time=50, chromatium_gain_from_food=5):
         '''
         Create a new Vampiro-Chromatium model with the given parameters.
@@ -110,7 +110,7 @@ class VampiroChromatium(Model):
 
                 if self.random.uniform(0,1) < self.initial_food:
                     eatable = True
-                    store_level = 1
+                    store_level = self.random.randint(1,10) 
                 else:
                     eatable = False
                     store_level = 0
