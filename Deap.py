@@ -93,6 +93,7 @@ def main():
     best_of_gen = []
     best_fitness_gen = 1000
     for g in range(ngen):
+        print("Generation {}/{}     time: {}".format(g,ngen, datetime.datetime.now()))
         logbooks.append(tools.Logbook())
         logbooks[-1].header = "gen", "evals", "std", "min", "avg", "max"
         population = toolbox.generate()
