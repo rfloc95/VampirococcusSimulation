@@ -91,6 +91,7 @@ def main():
     ngen = 20 #the number of generations the algorithm will do 
     logbooks = list()
     for g in range(ngen):
+        print("Generation {}/{}     time: {}".format(g,ngen, datetime.datetime.now()))
         logbooks.append(tools.Logbook())
         logbooks[-1].header = "gen", "evals", "std", "min", "avg", "max"
         population = toolbox.generate()
