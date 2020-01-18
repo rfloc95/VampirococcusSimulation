@@ -17,6 +17,7 @@ from vampiro_chromatium.chromatium import Chromatium
 from vampiro_chromatium.vampiro_new import Vampiro
 from vampiro_chromatium.model import VampiroChromatium
 from vampiro_chromatium.schedule import RandomActivationByBreed
+import datetime
 
 #defining the fitness function(basically a weighted sum of the populations by the steps take + the average difference of the population during the simulation)
 def fitness_fn(list_of_two):
