@@ -22,7 +22,7 @@ from vampiro_chromatium.schedule import RandomActivationByBreed
 def fitness_fn(list_of_two):
     initial_chrm, initial_vamp = list_of_two
     model = VampiroChromatium(int(initial_chrm), int(initial_vamp))
-    max_steps = 50 #the maximum number of steps the simulation will do before stopping
+    max_steps = 5000 #the maximum number of steps the simulation will do before stopping
     chrome_count = 0
     vampo_count = 0
     rates_chrome = []
