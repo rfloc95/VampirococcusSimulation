@@ -22,7 +22,7 @@ from vampiro_chromatium.schedule import RandomActivationByBreed
 def fitness_fn(list_of_two):
     initial_chrm, initial_vamp = list_of_two
     model = VampiroChromatium(int(initial_chrm), int(initial_vamp))
-    max_steps = 5000 #the maximum number of steps the simulation will do before stopping
+    max_steps = 50 #the maximum number of steps the simulation will do before stopping
     chrome_count = 0
     vampo_count = 0
     rates_chrome = []
@@ -72,6 +72,8 @@ def plottin(logbook):
     plt.plot( 'x', 'y1', data=df, marker='', color='red', linewidth=2, label = "average")
     plt.plot( 'x', 'y2', data=df, marker='', color='black', linewidth=2, label = "minimum")
     plt.plot( 'x', 'y3', data=df, marker='', color='blue', linewidth=2, label="maximum")
+    plt.xlabel('Generation')
+    plt.ylabel('Fitness')
     plt.legend()
     plt.show()
 
