@@ -22,7 +22,7 @@ from vampiro_chromatium.schedule import RandomActivationByBreed
 def fitness_fn(list_of_two):
     initial_chrm, initial_vamp = list_of_two
     model = VampiroChromatium(int(initial_chrm), int(initial_vamp))
-    max_steps = 5000 #the maximum number of steps the simulation will do before stopping
+    max_steps = 5 #the maximum number of steps the simulation will do before stopping
     chrome_count = 0
     vampo_count = 0
     rates_chrome = []
@@ -90,6 +90,8 @@ def main():
     stats.register("max", numpy.max)
     ngen = 20 #the number of generations the algorithm will do 
     logbooks = list()
+    best_of_gen = []
+    best_fitness_gen = 1000
     for g in range(ngen):
         logbooks.append(tools.Logbook())
         logbooks[-1].header = "gen", "evals", "std", "min", "avg", "max"
@@ -97,11 +99,16 @@ def main():
         fitnesses = toolbox.map(toolbox.evaluate, population) #fitness for each individual is generated 
         for ind, fit in zip(population, fitnesses):
             ind.fitness.values = fit
+            if fit[0] < best_fitness_gen:
+                best_fitness_gen = fit[0]
+                best_of_gen = ind
         toolbox.update(population) #population is updated
         hof.update(population) #hof is updated
         record = stats.compile(population) #statistics are recorded 
         logbooks[-1].record(gen=g, evals=20, **record)
-
+        print("The best of generation " + str(g) + " is "+ str(best_of_gen) + " that has a fitness of: " + str(best_fitness_gen))
+        best_of_gen = []
+        best_fitness_gen = 1000
     print("The best set of parameters is: " + str(hof[0]))
     print("You can also try: " + str(hof[1]) + " or " + str(hof[2]))
     return logbooks
