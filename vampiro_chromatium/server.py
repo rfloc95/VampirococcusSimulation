@@ -5,8 +5,7 @@ from mesa.visualization.UserParam import UserSettableParameter
 from vampiro_chromatium.food import FoodPatch
 
 from vampiro_chromatium.chromatium import Chromatium
-#from vampiro_chromatium.vampiro import Vampiro
-from vampiro_chromatium.vampiro_new import Vampiro
+from vampiro_chromatium.vampiro import Vampiro
 
 from vampiro_chromatium.model import VampiroChromatium
 
