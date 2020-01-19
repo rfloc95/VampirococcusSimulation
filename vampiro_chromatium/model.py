@@ -8,12 +8,8 @@ from mesa.datacollection import DataCollector
 from vampiro_chromatium.vampiro import Vampiro
 from vampiro_chromatium.food import FoodPatch
 from vampiro_chromatium.chromatium import Chromatium
-<<<<<<< HEAD
-=======
-#from vampiro_chromatium.vampiro import Vampiro
 from vampiro_chromatium.vampiro_new import Vampiro
 
->>>>>>> vampiro
 from vampiro_chromatium.schedule import RandomActivationByBreed
 
 
@@ -35,13 +31,8 @@ class VampiroChromatium(Model):
 
     food = False
     initial_food = 0.1
-<<<<<<< HEAD
-    food_regrowth_time = 30 # Max growth time for food 
-    chromatium_gain_from_food = 4
-=======
     food_regrowth_time = 30
     chromatium_gain_from_food = 5
->>>>>>> vampiro
 
     verbose = False  # Print-monitoring
 

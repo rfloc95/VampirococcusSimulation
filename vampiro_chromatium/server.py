@@ -76,8 +76,4 @@ model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
                 "chromatium_gain_from_food": UserSettableParameter('slider', 'Chromatium Gain From Food', 5, 1, 30, 1)
                 }
 server = ModularServer(VampiroChromatium, [canvas_element, chart_element], "Vampiro Chromatium Predation", model_params)
-<<<<<<< HEAD
-=======
-#server = ModularServer(VampiroChromatium, [canvas_element], "Vampirococcus Chromatium Ecosystem", model_params)
->>>>>>> vampiro
 server.port = 8521
