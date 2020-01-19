@@ -24,32 +24,23 @@ def fitness_fn(list_of_two):
     initial_chrm, initial_vamp = list_of_two
     model = VampiroChromatium(int(initial_chrm), int(initial_vamp))
     max_steps = 5000 #the maximum number of steps the simulation will do before stopping
-    chrome_count = 0
-    vampo_count = 0
-    rates_chrome = []
-    rates_vamp = []
+    penalty = 0
     for i in range(max_steps):
         steps, chrm_count, vamp_count = model.step()
-        rates_chrome.append(chrm_count - chrome_count)
-        rates_vamp.append(vamp_count - vampo_count)
-        vampo_count = vamp_count
-        chrome_count = chrm_count
         if chrm_count == 0 or vamp_count == 0:
+            penalty = 5000
             break
-        if i == max_steps:
-            break
-    rates_chrome.sort()
-    rates_vamp.sort()  
-    return ((chrm_count + vamp_count) * (steps) + 0.00000000001)**-1 + abs((statistics.mean(rates_chrome) - statistics.mean(rates_vamp))),
+    print(steps) 
+    return ((chrm_count + vamp_count) * (steps) - penalty),   
 
 #randomly generate individuals for the population
 def indiv_creator():
-    chrome = int(random.randrange(1, 100))
-    vampa = int(random.randrange(1, 100))  
+    chrome = int(random.randrange(1, 200))
+    vampa = int(random.randrange(1, 200))  
     return [chrome, vampa]
 
 #deap
-creator.create("FitnessMin", base.Fitness, weights=(-1.0,)) #generating the fitness in deap, which maximizes the objective
+creator.create("FitnessMin", base.Fitness, weights=(1.0,)) #generating the fitness in deap, which maximizes the objective
 creator.create("Individual", list, fitness=creator.FitnessMin) #creation of the individual in deap
 toolbox = base.Toolbox()
 toolbox.register("individual_creator", indiv_creator) #recalls the indiv_creator function in the toolbox
@@ -92,7 +83,7 @@ def main():
     ngen = 20 #the number of generations the algorithm will do 
     logbooks = list()
     best_of_gen = []
-    best_fitness_gen = 1000
+    best_fitness_gen = 0
     for g in range(ngen):
         print("Generation {}/{}     time: {}".format(g,ngen, datetime.datetime.now()))
         logbooks.append(tools.Logbook())
@@ -101,7 +92,7 @@ def main():
         fitnesses = toolbox.map(toolbox.evaluate, population) #fitness for each individual is generated 
         for ind, fit in zip(population, fitnesses):
             ind.fitness.values = fit
-            if fit[0] < best_fitness_gen:
+            if fit[0] > best_fitness_gen:
                 best_fitness_gen = fit[0]
                 best_of_gen = ind
         toolbox.update(population) #population is updated
@@ -110,7 +101,7 @@ def main():
         logbooks[-1].record(gen=g, evals=20, **record)
         print("The best of generation " + str(g) + " is "+ str(best_of_gen) + " that has a fitness of: " + str(best_fitness_gen))
         best_of_gen = []
-        best_fitness_gen = 1000
+        best_fitness_gen = 0
     print("The best set of parameters is: " + str(hof[0]))
     print("You can also try: " + str(hof[1]) + " or " + str(hof[2]))
     return logbooks
