@@ -38,7 +38,7 @@ def vampiro_chromatium_portrayal(agent):
         portrayal["scale"] = 0.9
         portrayal["Layer"] = 1'''
         portrayal = {"Shape": "circle",
-                 "Color": "#4F4949",
+                 "Color": "#FC3636",
                  "Filled": "true",
                  "Layer": 0,
                  "r": .9}
@@ -52,7 +52,7 @@ def vampiro_chromatium_portrayal(agent):
         #portrayal["text"] = round(agent.energy, 1)
         #portrayal["text_color"] = "Green"'''
         portrayal = {"Shape": "circle",
-                 "Color": "#FC3636",
+                 "Color": "#4F4949",
                  "Filled": "true",
                  "Layer": 0,
                  "r": .5}
@@ -60,21 +60,20 @@ def vampiro_chromatium_portrayal(agent):
     return portrayal
 
 
-canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 50, 50, 800, 800)
-chart_element = ChartModule([{"Label": "Vampiro", "Color": "#AA0000"},
-                             {"Label": "Chromatium", "Color": "#666666"}])
+canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 50, 50, 600, 600)
+chart_element = ChartModule([{"Label": "Vampiro", "Color": "#4F4949"},
+                             {"Label": "Chromatium", "Color": "#FC3636"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),
                 "initial_food": UserSettableParameter('slider', 'Initial Food Proportion', 0.2, 0.01, 1.0, 0.01),
                 "food_regrowth_time": UserSettableParameter('slider', 'Food Regrowth Time', 50, 1, 300,1),
                 "initial_chromatium": UserSettableParameter('slider', 'Initial Chromatium Population', 80, 1, 200,1),
                 "chromatium_reproduce": UserSettableParameter('slider', 'Chromatium Reproduction Rate', 0.3, 0.01, 1.0, 0.01),
-                "initial_vampiro": UserSettableParameter('slider', 'Initial Vampiro Population', 20, 1, 100, 1),
-                "vampiro_reproduce": UserSettableParameter('slider', 'Vampiro Reproduction Rate', 0.15, 0.01, 1.0, 0.01,
+                "initial_vampiro": UserSettableParameter('slider', 'Initial Vampiro Population', 20, 1, 200, 1),
+                "vampiro_reproduce": UserSettableParameter('slider', 'Vampiro Reproduction Rate', 0.3, 0.01, 1.0, 0.01,
                                                        description="The rate at which vampiro agents reproduce."),
                 "vampiro_gain_from_food": UserSettableParameter('slider', 'Vampiro Gain From Food Rate', 2, 1, 30, 1),
                 "chromatium_gain_from_food": UserSettableParameter('slider', 'Chromatium Gain From Food', 5, 1, 30, 1)
                 }
-
 server = ModularServer(VampiroChromatium, [canvas_element, chart_element], "Vampiro Chromatium Predation", model_params)
 #server = ModularServer(VampiroChromatium, [canvas_element], "Vampirococcus Chromatium Ecosystem", model_params)
 server.port = 8521

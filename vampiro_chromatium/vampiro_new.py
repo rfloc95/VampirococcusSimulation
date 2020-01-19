@@ -81,7 +81,7 @@ class Vampiro(Agent):
 
         if not already_eat:
             '''
-            Not attached to prey, move random and check for some prey
+            Not attached to prey, move gradient/random and check for some prey
             '''
             self.gradient_move()
             # Check for chromatium

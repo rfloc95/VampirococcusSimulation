@@ -40,7 +40,7 @@ class VampiroChromatium(Model):
 
     description = 'A model for simulating vampirococcus and chromatium (predator-prey) ecosystem modelling.'
 
-    def __init__(self, initial_chromatium, initial_vampiro, chromatium_reproduce=0.3, vampiro_reproduce=0.30,
+    def __init__(self, initial_chromatium, initial_vampiro, chromatium_reproduce=0.3, vampiro_reproduce=0.15,
                 height=50, width=50, vampiro_gain_from_food=2,
                 food=True, initial_food=0.1, food_regrowth_time=50, chromatium_gain_from_food=5):
         '''
