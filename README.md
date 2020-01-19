@@ -28,3 +28,17 @@ To run the interactive simulation from the main folder type:
 ```
    $ python run.py
 ```
+
+## Running Optimization
+
+To perform CMA-ES optimization of initial population (it will require a lot of time):
+
+```
+   $ python Deap.py
+```
+
+You can also try to optimize only reproduction rates (it will also require a lot of time):
+
+```
+   $ python Deap_small.py
+```
