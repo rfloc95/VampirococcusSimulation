@@ -24,21 +24,27 @@ best_of_all = []
 def fitness_fn(list_of_two):
     model = VampiroChromatium(100,100,chromatium_reproduce=list_of_two[0], vampiro_reproduce=list_of_two[1])
     max_steps = 5000 #the maximum number of steps the simulation will do before stopping
-    for i in range(max_steps):
-        steps, chrm_count, vamp_count = model.step()
-        if chrm_count == 0 or vamp_count == 0:
-            break
-        if i == max_steps:
-            break
-    print(steps) 
-    if steps == 5000:
-        best_of_all.append(list_of_two)
-    return ((chrm_count + vamp_count) * (steps) + 0.00000000001),
+    if list_of_two[0] < 0.1 or list_of_two[1] < 0.1:
+        fitness_i = -10**30
+    elif list_of_two[0] > 1 or list_of_two[1] > 1:
+        fitness_i = -10**30
+    else:
+        for i in range(max_steps):
+            steps, chrm_count, vamp_count = model.step()
+            if chrm_count == 0 or vamp_count == 0:
+                break
+        if steps >= max_steps-1:
+            fitness_i = steps *(chrm_count + vamp_count + 1)
+        else:
+            fitness_i = steps
+        print(steps) 
+    
+    return fitness_i,
 
 #randomly generate individuals for the population
 def indiv_creator():
-    chrome = int(random.random())
-    vampa = int(random.random())  
+    chrome = random.uniform(0,1)
+    vampa = random.uniform(0,1) 
     return [chrome, vampa]
 
 #deap
