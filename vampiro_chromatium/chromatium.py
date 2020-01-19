@@ -1,8 +1,8 @@
 
 
 from mesa import Agent
+import math
 from vampiro_chromatium.food import FoodPatch
-
 
 
 class Chromatium(Agent):
@@ -27,6 +27,16 @@ class Chromatium(Agent):
         Gradient move depending on FoodPatch and Vampiro == Chemotaxys fellas!
         '''
         neigh_obj = self.model.grid.get_neighbors(self.pos, self.moore, include_center=True, radius=1)
+        
+        # I can not load vampiro here because vampiro loads Chromatium
+        '''
+        # TO DO: If there is a Vampiro, Go away from him -> at least one cell away, then look for food
+        vampiro_pos = [obj.pos for obj in neigh_obj if isinstance(obj, Vampiro)]
+        if len(vampiro_pos) > 0:
+            cells_to_avoid = [self.model.grid.get_neighborhood(coor, True, include_center=True, radius=1) for coor in vampiro_pos]
+            print(cells_to_avoid)
+        '''
+
         food_patches = [obj for obj in neigh_obj if isinstance(obj, FoodPatch) and obj.eatable]
         if len(food_patches) > 0:
             # look those with higher store
@@ -45,8 +55,6 @@ class Chromatium(Agent):
         Model step to implement!
         '''
         self.gradient_move()
-        living = True
-
         # reduce energy each step
         self.energy -= 1
 
@@ -54,7 +62,6 @@ class Chromatium(Agent):
         if self.energy < 0:
             self.model.grid._remove_agent(self.pos, self)
             self.model.schedule.remove(self)
-            living = False
 
         # if there is food available eat it
         this_cell = self.model.grid.get_cell_list_contents([self.pos])
@@ -69,9 +76,9 @@ class Chromatium(Agent):
                 food_patches.store_level -= 1
 
         # Reproduction
-        if living and self.random.random() < self.model.chromatium_reproduce:
+        if  self.random.random() < self.model.chromatium_reproduce:
             # Create a new chromatium:
-            self.energy /= 2
+            self.energy = math.floor(self.energy /2)
             chromatium = Chromatium(self.model.next_id(), self.pos, self.model,
                          self.moore, self.energy)
             self.model.grid.place_agent(chromatium, self.pos)
