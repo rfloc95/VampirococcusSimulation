@@ -32,35 +32,23 @@ def vampiro_chromatium_portrayal(agent):
         portrayal["h"] = 1
 
     elif type(agent) is Chromatium:
-        '''
-        portrayal["Shape"] = "vampiro_chromatium/resources/chromatium.png"
-        # https://icons8.com/web-app/433/sheep
-        portrayal["scale"] = 0.9
-        portrayal["Layer"] = 1'''
         portrayal = {"Shape": "circle",
                  "Color": "#FC3636",
                  "Filled": "true",
-                 "Layer": 0,
+                 "Layer": 2,
                  "r": .9}
     
     elif type(agent) is Vampiro:
-        '''
-        portrayal["Shape"] = "vampiro_chromatium/resources/batman.jpg"
-        # https://icons8.com/web-app/36821/German-Shepherd
-        portrayal["scale"] = 0.9
-        portrayal["Layer"] = 2
-        #portrayal["text"] = round(agent.energy, 1)
-        #portrayal["text_color"] = "Green"'''
         portrayal = {"Shape": "circle",
                  "Color": "#4F4949",
                  "Filled": "true",
-                 "Layer": 0,
+                 "Layer": 2,
                  "r": .5}
 
     return portrayal
 
 
-canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 50, 50, 600, 600)
+canvas_element = CanvasGrid(vampiro_chromatium_portrayal, 50, 50, 700, 700)
 chart_element = ChartModule([{"Label": "Vampiro", "Color": "#4F4949"},
                              {"Label": "Chromatium", "Color": "#FC3636"}])
 model_params = {"food": UserSettableParameter('checkbox', 'Food Enabled', True),

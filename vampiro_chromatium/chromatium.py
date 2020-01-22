@@ -83,4 +83,4 @@ class Chromatium(Agent):
                          self.moore, self.energy)
             self.model.grid.place_agent(chromatium, self.pos)
             self.model.schedule.add(chromatium)
-        
+   
